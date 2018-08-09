@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>storeIndex</title>
+  </head>
+  <body>
+    <% if (status === 'unlogined') { %>
+      <a href="/store-signin">store-signin</a>
+      <a href="/store-signup">store-signup</a>
+    <% } %>
+    <% if (status === 'logined') { %>
+      <h1>Hello, <%= store %></h1>
+      <a href="/payment-normal">payment-normal</a>
+      <a href="/payment-mileage">payment-mileage</a>
+      <a href="/store-logout">store-logout</a>
+    <% } %>
+  </body>
+</html>

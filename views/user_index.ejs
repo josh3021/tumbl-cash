@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>userIndex</title>
+  </head>
+  <body>
+    <% if(status === 'unlogined') { %>
+      <a href="/signin">signin</a>
+      <a href="/signup">signup</a>
+    <% } %>
+    <% if(status === 'logined') { %>
+      <h1>Hello, <%= username %></h1>
+      <a href="/add-device">add-device</a>
+      <a href="/remove-device">remove-device</a>
+      <a href="/logout">logout</a>
+    <% } %>
+  </body>
+</html>
