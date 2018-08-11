@@ -1,5 +1,4 @@
 const QRCode = require('qrcode');
-const shortid = require('shortid');
 
 module.exports = app => {
   app.get('/qrcode-generator', (req, res) => {

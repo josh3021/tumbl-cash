@@ -1,10 +1,4 @@
 module.exports = app => {
-  app.get('/add-device', (req, res) => {
-    if(!req.session.username)
-      res.render('user_index.ejs', {status: 'unlogined'})
-    else
-      res.render('user_addDevice.ejs')
-  })
 
   app.post('/add-device', (req, res) => {
     let deviceCode = req.body.deviceCode
@@ -19,12 +13,14 @@ module.exports = app => {
       }
 
       if (!user) {
+        console.log('no user')
         return res.json({'res': 400})
       }
 
       var addDevice = user.addDevice(deviceCode, deviceName)
 
       if(!addDevice) {
+        console.log('duplicated device')
         return res.json({'res': 400})
       }
 
@@ -37,14 +33,9 @@ module.exports = app => {
       return res.json({'res': 200})
     })
   })
-  
-  app.get('/remove-device', (req, res) => {
-    res.render('user_removeDevice.ejs')
-  })
 
   app.post('/remove-device', (req, res) => {
     let deviceCode = req.body.deviceCode
-    let deviceName = req.body.deviceName
     
     const database = req.app.get('database')
     database.UserModel.findOne({
@@ -58,7 +49,7 @@ module.exports = app => {
         return res.json({'res': 400})
       }
 
-      var removeDevice = user.removeDevice(deviceCode, deviceName)
+      var removeDevice = user.removeDevice(deviceCode)
 
       if(!removeDevice) {
         return res.json({'res': 400})

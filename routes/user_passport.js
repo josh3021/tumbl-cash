@@ -14,7 +14,8 @@ module.exports = (app, passport) => {
   app.post('/signin', passport.authenticate('user-login', {
     failureFlash: false
   }), function(req, res) {
-    res.json({username: req.user.username, email: req.user.email, mileage: req.user.mileage, deviceList: req.user.deviceList})
+    if(req.session.username)
+      res.json({username: req.user.username, email: req.user.email, mileage: req.user.mileage, deviceList: req.user.deviceList})
   });
 
     // 회원가임 폼
@@ -26,7 +27,8 @@ module.exports = (app, passport) => {
   app.post('/signup', passport.authenticate('user-signup', {
     failureFlash: false
   }), function(req, res) {
-    res.json({username: req.user.username, email: req.user.email, mileage: req.user.mileage, deviceList: req.user.deviceList})
+    if(req.session.username)
+      res.json({username: req.user.username, email: req.user.email, mileage: req.user.mileage, deviceList: req.user.deviceList})
   });
 
     // 로그아웃

@@ -1,5 +1,5 @@
 module.exports = {
-  dev_port: 8000,
+  dev_port: 8080,
   db_url: 'mongodb://localhost:27017/NULL_user',
   db_schemas: [{
     file: './user_schema',
@@ -21,5 +21,20 @@ module.exports = {
     collection: 'rents',
     schemaName: 'RentSchema',
     modelName: 'RentModel'
-  }]
+  }],
+  passport: [
+    './passport/userPassport/passport',
+    './passport/storePassport/passport',
+    './passport/marketPassport/passport',
+    './routes/user_passport',
+    './routes/store_passport',
+    './routes/market_passport',
+  ],
+  routes: [
+    './routes/user_device_manage',
+    './routes/rent_device_manage',
+    './routes/payment',
+    './routes/return',
+    './routes/qr_manage'
+  ]
 }

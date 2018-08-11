@@ -1,5 +1,4 @@
 let Schema = {};
-var moment = require('moment');
 
 Schema.createSchema = mongoose => {
   let OrderSchema = mongoose.Schema({

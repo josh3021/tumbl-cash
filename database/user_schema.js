@@ -102,6 +102,7 @@ Schema.createSchema = mongoose => {
 
   UserSchema.method('addDevice', function (deviceCode, deviceName){
     for(i in this.deviceList) {
+      console.log('deviceList: '+this.deviceList[i])
       if(this.deviceList[i].deviceCode === deviceCode || this.deviceList[i].deviceName === deviceName) {
         return false
       }
