@@ -5,12 +5,8 @@ module.exports = new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, (req, store, password, done) => {
-  console.log('config/passport/local-signup 호출됨');
   let paramEmail = req.body.email;
 
-  console.log('store: %s, password: %s, email: %s', store, password, paramEmail);
-
-    
   process.nextTick(() => {
     const database = req.app.get('database');
 
@@ -21,7 +17,6 @@ module.exports = new LocalStrategy({
         return done(err);
             
       if(user){
-        console.log('계정이 이미 존재함');
         return done(null, false, req.flash('signupMessage', '계정이 이미 존재합니다.'));
       }
 
@@ -39,7 +34,6 @@ module.exports = new LocalStrategy({
         storeName.save(err => {
           if(err)
             throw err;
-          console.log('사용자 데이터 데이터베이스에 정상적으로 추가됨');
           req.session.store = store;
           return done(null, store);    
         })

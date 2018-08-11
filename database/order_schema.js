@@ -1,4 +1,5 @@
 let Schema = {};
+var moment = require('moment');
 
 Schema.createSchema = mongoose => {
   let OrderSchema = mongoose.Schema({
@@ -20,11 +21,27 @@ Schema.createSchema = mongoose => {
       unique: false,
       'default': ''
     },
+    menuList: [
+      new mongoose.Schema({
+        menu: {
+          type: String,
+          required: true,
+          unique: false,
+          'default': ''
+        }
+      })
+    ],
     price: {
       type: Number,
       required: true,
       unique: false,
       'default': 0
+    },
+    isLoaning: {
+      type: Boolean,
+      required: true,
+      unique: false,
+      'default': false
     },
     created_at: {
       type: Date,

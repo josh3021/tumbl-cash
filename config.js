@@ -16,5 +16,10 @@ module.exports = {
     collection: 'orders',
     schemaName: 'OrderSchema',
     modelName: 'OrderModel'
+  }, {
+    file: './rent_schema',
+    collection: 'rents',
+    schemaName: 'RentSchema',
+    modelName: 'RentModel'
   }]
 }

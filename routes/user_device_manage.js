@@ -19,23 +19,22 @@ module.exports = app => {
       }
 
       if (!user) {
-        console.log(user+'를 찾을 수 없음')
-        res.redirect('/')
+        return res.json({'res': 400})
       }
 
       var addDevice = user.addDevice(deviceCode, deviceName)
 
       if(!addDevice) {
-        console.log('deviceCode || deviceName 중복')
+        return res.json({'res': 400})
       }
 
       user.save(err => {
         if (err) {
           throw err
         }
-        console.log('device added successfully')
-        return res.redirect('/')
       })
+
+      return res.json({'res': 200})
     })
   })
   
@@ -56,23 +55,22 @@ module.exports = app => {
       }
 
       if (!user) {
-        console.log(user+'를 찾을 수 없음')
-        res.redirect('/')
+        return res.json({'res': 400})
       }
 
       var removeDevice = user.removeDevice(deviceCode, deviceName)
 
       if(!removeDevice) {
-        console.log('error')
+        return res.json({'res': 400})
       }
 
       user.save(err => {
         if (err) {
           throw err
         }
-        console.log('device removed successfully')
-        return res.redirect('/')
       })
+
+      return res.json({'res': 200})
     })
   })
 }

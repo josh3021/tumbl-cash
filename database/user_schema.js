@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const shortid = require('shortid');
 
 let Schema = {};
 
@@ -9,6 +10,12 @@ Schema.createSchema = mongoose => {
       required: true,
       unique: true,
       'default': ''
+    },
+    usercode: {
+      type: String,
+      required: true,
+      unique: true,
+      'default': shortid.generate()
     },
     hashed_password: {
       type: String,
@@ -30,8 +37,7 @@ Schema.createSchema = mongoose => {
       new mongoose.Schema({
         deviceCode: {
           type: String,
-          required: true,
-          unique: true,
+          unique: false,
           'default': ''
         },
         deviceName: {
@@ -111,7 +117,7 @@ Schema.createSchema = mongoose => {
     }
   })
 
-  UserSchema.method('removeDevice', function (deviceCode, deviceName){
+  UserSchema.method('removeDevice', function (deviceCode){
     var index = this.findIndex(deviceCode);
     this.deviceList.splice(index, 1);
     console.log(JSON.stringify(this.deviceList))

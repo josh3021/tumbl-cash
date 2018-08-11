@@ -12,10 +12,10 @@ module.exports = (app, passport) => {
 
   // login form
   app.post('/signin', passport.authenticate('user-login', {
-    successRedirect: '/',
-    failureRedirect: '/signin',
     failureFlash: false
-  }));
+  }), function(req, res) {
+    res.json({username: req.user.username, email: req.user.email, mileage: req.user.mileage, deviceList: req.user.deviceList})
+  });
 
     // 회원가임 폼
   app.get('/signup', (req, res) => {
@@ -24,17 +24,17 @@ module.exports = (app, passport) => {
 
     // 회원가임 proc
   app.post('/signup', passport.authenticate('user-signup', {
-    successRedirect: '/',
-    failureRedirect: '/signup',
     failureFlash: false
-  }));
+  }), function(req, res) {
+    res.json({username: req.user.username, email: req.user.email, mileage: req.user.mileage, deviceList: req.user.deviceList})
+  });
 
     // 로그아웃
   app.get('/logout', (req, res) => {
     console.log('/logout 패스 요청됨.');
     req.logout();
     req.session.destroy();
-    res.redirect('/');
+    res.json({'res': 200})
   });
 
 

@@ -1,15 +1,13 @@
-const mongoose = require('mongoose');
-const config = require('../config');
+const mongoose = require("mongoose");
+const config = require("../config");
 
 let database = {};
 
-database.init = app => {
-  console.log('database.init 호출됨');
+database.init = (app) => {
   connectDB(app);
 }
 
 function connectDB(app){
-  console.log('database.connect 호출됨');
   const databaseUrl = config.db_url;
 
   mongoose.connect(databaseUrl);
@@ -20,6 +18,7 @@ function connectDB(app){
     console.log('database connected successfully');
     createSchema(app, config);
   });
+  console.log('connecting to Server AGAIN...')
   database.on('disconnected', connectDB);
 }
 
@@ -32,16 +31,10 @@ function createSchema(app, config) {
     let curSchema = require(curItem.file).createSchema(mongoose);
     let curModel = mongoose.model(curItem.collection, curSchema);
 
-    console.log('curSchema: %s, curModel: %s', curItem.file, curItem.collection);
-
     database[curItem.schemaName] = curSchema;
     database[curItem.modelName] = curModel;
-    console.log('curItem.schemaName: %s ', curItem.schemaName)
-    console.log('curItem.modelName: %s ', curItem.modelName)
   }
   app.set('database', database);
-
-  console.log('database 속성이 app 객체에 추가됨');
 }
 
 module.exports = database;

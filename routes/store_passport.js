@@ -15,7 +15,9 @@ module.exports = (app, passport) => {
     successRedirect: '/store',
     failureRedirect: '/store-signin',
     failureFlash: false
-  }));
+  }), function(req, res) {
+    res.json({store: req.store.store})
+  });
 
     // 회원가임 폼
   app.get('/store-signup', (req, res) => {
@@ -27,14 +29,16 @@ module.exports = (app, passport) => {
     successRedirect: '/store',
     failureRedirect: '/store-signup',
     failureFlash: false
-  }));
+  }), function(req, res) {
+    res.json({store: req.store.store})
+  });
 
     // 로그아웃
   app.get('/store-logout', (req, res) => {
     console.log('/store-logout 패스 요청됨.');
     req.logout();
     req.session.destroy();
-    res.redirect('/store');
+    res.json({'res': 200})
   });
 
 };

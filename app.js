@@ -11,6 +11,7 @@ var engine = require('ejs-locals');
 
 var config = require('./config');
 
+
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
@@ -37,16 +38,27 @@ database.init(app)
 //routes
 const configUserPassport = require('./passport/userPassport/passport')
 const configStorePassport = require('./passport/storePassport/passport')
+const configMarketPassport = require('./passport/marketPassport/passport')
 const userPassportRouter = require('./routes/user_passport')
 const storePassportRouter = require('./routes/store_passport')
+const marketPassportRouter = require('./routes/market_passport')
 const userAddDeviceRouter = require('./routes/user_device_manage')
+const rentAddDeviceRouter = require('./routes/rent_device_manage')
 const paymentRouter = require('./routes/payment')
+const returnRouter = require('./routes/return')
+const qrRouter = require('./routes/qr_manage')
+
 configUserPassport(app, passport);
 configStorePassport(app, passport);
+configMarketPassport(app, passport);
 userPassportRouter(app, passport);
 storePassportRouter(app, passport);
+marketPassportRouter(app, passport)
 userAddDeviceRouter(app);
-paymentRouter(app)
+rentAddDeviceRouter(app);
+paymentRouter(app);
+returnRouter(app);
+qrRouter(app);
 
 const errorHandler = expressErrorHandler({
   static: {
@@ -58,5 +70,5 @@ app.use(expressErrorHandler.httpError(404))
 app.use(errorHandler)
 
 http.listen(config.dev_port, () => {
-  console.log('listening on dev port: ' + config.dev_port)
+  console.log('listening on http port: ' + config.dev_port)
 })

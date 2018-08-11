@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const shortid = require('shortid');
 
 let Schema = {};
 
@@ -9,6 +10,12 @@ Schema.createSchema = mongoose => {
       required: true,
       unique: true,
       'default': ''
+    },
+    store_id: {
+      type: String,
+      required: true,
+      unique: true,
+      'default': shortid.generate()
     },
     hashed_password: {
       type: String,

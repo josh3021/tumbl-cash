@@ -5,11 +5,7 @@ module.exports = new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, (req, username, password, done) => {
-  console.log('config/passport/local-signup 호출됨');
   let paramEmail = req.body.email;
-
-  console.log('username: %s, password: %s, email: %s', username, password, paramEmail);
-
     
   process.nextTick(() => {
     const database = req.app.get('database');
@@ -21,12 +17,11 @@ module.exports = new LocalStrategy({
         return done(err);
             
       if(user){
-        console.log('계정이 이미 존재함');
+        res.json({'res': 401})
         return done(null, false, req.flash('signupMessage', '계정이 이미 존재합니다.'));
       }
 
       else {
-        console.log('UserModel: '+database.UserModel);
         user = new database.UserModel({
           'username': username,
           'password': password,
@@ -35,9 +30,8 @@ module.exports = new LocalStrategy({
         user.save(err => {
           if(err)
             throw err;
-          console.log('사용자 데이터 데이터베이스에 정상적으로 추가됨');
           req.session.username = username;
-          return done(null, user);    
+          return done(null, user)    
         });
       }
     })
