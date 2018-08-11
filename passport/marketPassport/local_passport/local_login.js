@@ -5,7 +5,6 @@ module.exports = new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, (req, store, password, done) => {
-  console.log('passport/local_login 호출됨');
 
   const database = req.app.get('database');
   database.StoreModel.findOne({
@@ -25,8 +24,9 @@ module.exports = new LocalStrategy({
       return done(null, false);
     }
 
+    res.json({'res': 200})
     req.session.store = store;
-    return done(null, user);
+    return done(null ,user);
   });
 
 });

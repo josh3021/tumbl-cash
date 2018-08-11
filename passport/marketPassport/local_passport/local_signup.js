@@ -5,36 +5,41 @@ module.exports = new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, (req, store, password, done) => {
-  let paramEmail = req.body.email;
-    
+
   process.nextTick(() => {
     const database = req.app.get('database');
 
     database.StoreModel.findOne({
-      'store': 'store'
+      'store': store
     }, (err, user) => {
       if(err) 
         return done(err);
             
       if(user){
-        res.json({'res': 401})
-        return done(null, false, req.flash('signupMessage', '계정이 이미 존재합니다.'));
+        return done(null, false);
       }
 
+      
       else {
-        user = new database.UserModel({
+
+        var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+
+        var storeName = new database.StoreModel({
           'store': store,
           'password': password,
-          'email': paramEmail
+          'email': paramEmail,
+          'ipAddress': ip
         });
-        user.save(err => {
+        storeName.save(err => {
           if(err)
             throw err;
           req.session.store = store;
-          return done(null, user)    
-        });
+
+          return done(null, store);    
+        })
       }
     })
   });
 
+  
 });

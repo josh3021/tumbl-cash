@@ -13,11 +13,12 @@ module.exports = new LocalStrategy({
     database.StoreModel.findOne({
       'store': store
     }, (err, user) => {
-      if(err) 
+      if(err) {
         return done(err);
-            
+      }
       if(user){
-        return done(null, false, req.flash('signupMessage', '계정이 이미 존재합니다.'));
+        res.json({'err': 100})
+        return done(null, false);
       }
 
       
@@ -35,6 +36,7 @@ module.exports = new LocalStrategy({
           if(err)
             throw err;
           req.session.store = store;
+
           return done(null, store);    
         })
       }

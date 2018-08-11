@@ -19,7 +19,7 @@ module.exports = (app, passport) => {
 
     // 회원가임 폼
   app.get('/market-signup', (req, res) => {
-    res.render('market-signup.ejs');
+    res.render('market_signup.ejs');
   });
 
     // 회원가임 proc

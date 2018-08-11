@@ -12,12 +12,15 @@ module.exports = (app, passport) => {
 
   // login form
   app.post('/store-signin', passport.authenticate('store-login', {
-    successRedirect: '/store',
-    failureRedirect: '/store-signin',
-    failureFlash: false
-  }), function(req, res) {
-    res.json({store: req.store.store})
-  });
+      failureFlash: false
+    }), (req, res) => {
+      if(req.session.store) {
+        res.json({'store': req.session.store})
+      }
+      else {
+        res.json({'error': 1})
+      }
+    });
 
     // 회원가임 폼
   app.get('/store-signup', (req, res) => {
@@ -26,11 +29,14 @@ module.exports = (app, passport) => {
 
     // 회원가임 proc
   app.post('/store-signup', passport.authenticate('store-signup', {
-    successRedirect: '/store',
-    failureRedirect: '/store-signup',
     failureFlash: false
   }), function(req, res) {
-    res.json({store: req.store.store})
+    if(req.session.store) {
+      res.json({'store': req.session.store})
+    }
+    else {
+      res.json({'error': 1})
+    }
   });
 
     // 로그아웃

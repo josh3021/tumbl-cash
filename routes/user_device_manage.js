@@ -44,7 +44,6 @@ module.exports = app => {
 
   app.post('/remove-device', (req, res) => {
     let deviceCode = req.body.deviceCode
-    let deviceName = req.body.deviceName
     
     const database = req.app.get('database')
     database.UserModel.findOne({
@@ -58,7 +57,7 @@ module.exports = app => {
         return res.json({'res': 400})
       }
 
-      var removeDevice = user.removeDevice(deviceCode, deviceName)
+      var removeDevice = user.removeDevice(deviceCode)
 
       if(!removeDevice) {
         return res.json({'res': 400})
